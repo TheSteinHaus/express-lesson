@@ -1,42 +1,27 @@
 import express from 'express';
+import { HomeRouter } from './Routers/HomeRouter.js';
+import { UserRouter } from './Routers/UserRouter.js';
+import { PostRouter } from './Routers/PostRouter.js';
+import { ActualRouter } from './Routers/ActualRouter.js';
+import { SearchRouter } from './Routers/SearchRouter.js';
 
 const app = express();
+app.use(express.json());
+// app.set('view engine', 'html');
+// app.engine('html', require('ejs').renderFile);
 
-//Для чтения тела POST запроса
-const urlencodedParser = express.urlencoded({extended: false});
-const port = '8000';
+const PORT = '8000';
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+app.use('/', HomeRouter);
+app.use('/user', UserRouter);
+app.use('/post', PostRouter);
+app.use('/actual', ActualRouter);
+app.use('/search', SearchRouter);
 
-app.post('/', urlencodedParser, (req, res) => {
-    const name = req.body.name;
-    const responseMessage = "Hello " + name + "!"
-    res.send(responseMessage)
-})
+export function FormatPost(post) {
+    return `<body style="display: flex; flex-direction: column; align-items: center;"><div style="background-color: rgba(25, 220, 128, 0.3); padding: 50px; padding-left: 70px; margin: 10px; width: 700px; border-radius: 215px"><h1>${post.name}<h3>${post.nickname}</h3></h1> <i>${post.date}</i> <p style="font-size: 20px;">${post.text}</p> <p>${post.likes} лайков - ${post.comments} комментариев - ${post.retweets} ретвитов</p></div></body>`
+}
 
-const userRouter = express.Router();
-app.use('/user', userRouter);
-
-//TODO: Возращать данные из какого-нибудь статичного JSON файла или простого JS объекта по ID пользователя и выводить на экран его никнейм.
-userRouter.get('/:id', (req, res) => {
-    res.send('User id = ' + req.params.id);
-})
-
-//TODO: Написать запрос на получение всех пользователей
-
-//TODO: Написать роут для твиттов (напр. /post)
-//TODO: Написать запрос для получения всех твиттов (пока можно хранить ввиде JSON файла или JS объекта)
-//TODO: Написать запрос для получения твитта по его ID
-//TODO: Написать POST запрос для отправки твитта (пока никуда записывать его не надо, нужно просто вернуть отправвленные данные назад)
-
-//TODO: Роут для актуального
-//TODO: Написать запрос на получение списка актуального
-
-//TODO: Роут для поиска
-//TODO: Написать запрос на поиск среди твиттов (просто по совпадению куска текста)
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+app.listen(PORT, () => {
+    console.log(`Example app listening at http://localhost:${PORT}`)
 })
