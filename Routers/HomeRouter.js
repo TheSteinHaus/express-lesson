@@ -1,5 +1,4 @@
 import express from 'express';
-import fs from 'fs';
 
 //Для чтения тела POST запроса
 const urlencodedParser = express.urlencoded({ extended: false });

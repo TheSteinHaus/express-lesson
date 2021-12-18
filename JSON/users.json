@@ -1,6 +1,6 @@
 [
     {
-        "id": "1",
+        "id": 1,
         "name": "Новости Дня",
         "nickname": "DailyNews",
         "description": "Новости каждый день",
@@ -11,7 +11,7 @@
         }
     },
     {
-        "id": "2",
+        "id": 2,
         "name": "Игромир",
         "nickname": "igromir",
         "description": "Популярная выставка игр",
@@ -22,7 +22,7 @@
         }
     },
     {
-        "id": "3",
+        "id": 3,
         "name": "Близкон",
         "nickname": "BlizzCon",
         "description": "Другая популярная выставка",
@@ -33,7 +33,7 @@
         }
     },
     {
-        "id": "4",
+        "id": 4,
         "name": "Новичок",
         "nickname": "newbie",
         "description": "Я новичок",

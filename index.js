@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import { HomeRouter } from './Routers/HomeRouter.js';
 import { UserRouter } from './Routers/UserRouter.js';
 import { PostRouter } from './Routers/PostRouter.js';
@@ -11,6 +12,10 @@ app.use(express.json());
 // app.engine('html', require('ejs').renderFile);
 
 const PORT = '8000';
+
+const url = 'mongodb+srv://Rometlaas:root@express-lesson.wws2o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+
+mongoose.connect(url, () => console.log('Mongo connected'));
 
 app.use('/', HomeRouter);
 app.use('/user', UserRouter);
