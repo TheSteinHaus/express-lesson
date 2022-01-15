@@ -48,4 +48,5 @@ PostRouter.post('/', urlencodedParser, (req, res) => {
     })
 
     Post.save()
+    res.json(Post)
 })

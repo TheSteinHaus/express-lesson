@@ -8,8 +8,6 @@ import { SearchRouter } from './Routers/SearchRouter.js';
 
 const app = express();
 app.use(express.json());
-// app.set('view engine', 'html');
-// app.engine('html', require('ejs').renderFile);
 
 const PORT = '8000';
 
