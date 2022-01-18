@@ -9,7 +9,7 @@ import { SearchRouter } from './Routers/SearchRouter.js';
 const app = express();
 app.use(express.json());
 
-const PORT = '8000';
+const PORT = '5000';
 
 const url = 'mongodb+srv://Rometlaas:root@express-lesson.wws2o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 

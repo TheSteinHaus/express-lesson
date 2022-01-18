@@ -13,20 +13,10 @@ const postStyle = '<body style="display: flex; flex-direction: column; align-ite
 //TODO: Написать запрос для получения всех твиттов (пока можно хранить ввиде JSON файла или JS объекта)
 PostRouter.get('/', (req, res) => {
     Posts.find({}, (error, posts) => {
-        if (error) { res.send("Посты не найдены") }
+        if (error) { res.status(404); res.send("Посты не найдены") }
 
         else {
-            const postsArray = posts.map((post) => {
-                const text = postStyle + `<h1>${post.name}<h3>${post.nickname}</h3></h1> <i>${post.date}</i> <p style="font-size: 20px;">${post.text}</p> <p>${post.likes} лайков - ${post.comments} комментариев - ${post.retweets} ретвитов</p></div></body>`
-                return text
-            })
-            
-            let allPosts = ''
-            for (let post of postsArray) {
-                allPosts += post
-            }
-
-            res.send(allPosts)
+            res.json(posts)
             
         }
     })
@@ -34,8 +24,15 @@ PostRouter.get('/', (req, res) => {
 //TODO: Написать запрос для получения твитта по его ID
 PostRouter.get('/:id', (req, res) => {
     Posts.findOne({ id: req.params.id }, (error, post) => {
-        if (error) { res.send('Пост не найден') }
-        else { post != null ? res.send(postStyle + `<h1>${post.name}<h3>${post.nickname}</h3></h1> <i>${post.date}</i> <p style="font-size: 20px;">${post.text}</p> <p>${post.likes} лайков - ${post.comments} комментариев - ${post.retweets} ретвитов</p></div></body>`) : res.send('Неправильный номер') }
+        if (error) { res.status(404); res.send('Пост не найден') }
+        else { 
+            if (post != null){
+                res.json(post)
+                return
+            }
+            res.status(400)
+            res.send('Неправильный номер')
+         }
     })
 })
 //TODO: Написать POST запрос для отправки твитта (пока никуда записывать его не надо, нужно просто вернуть отправвленные данные назад)

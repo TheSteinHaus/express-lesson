@@ -9,25 +9,17 @@ const postStyle = '<body style="display: flex; flex-direction: column; align-ite
 
 //TODO: Написать запрос на поиск среди твиттов (просто по совпадению куска текста)
 SearchRouter.get('/', (req, res) => {
-    Posts.find({}, (error, posts) => {
-        if (error) { res.send('Посты не найдены') }
+    Posts.find({ text: {$regex: req.query.text} }, (error, posts) => {
+        if (error) { res.status(400); res.send(error.codeName + '. Введите правильный запрос') }
 
         else {
-            const postsArray = posts.filter((post) => post.text.includes(req.query.text)).map((post) => {
-                const text = postStyle + `<h1>${post.name}<h3>${post.nickname}</h3></h1> <i>${post.date}</i> <p style="font-size: 20px;">${post.text}</p> <p>${post.likes} лайков - ${post.comments} комментариев - ${post.retweets} ретвитов</p></div></body>`
-                return text
-            })
-
-            if (postsArray.length === 0) { res.send('Посты не найдены') }
-
-            else {
-                let allPosts = ''
-                for (let post of postsArray) {
-                    allPosts += post
+                if (posts.length === 0) {
+                    res.status(400)
+                    res.send('Posts not found')
+                    return
                 }
-
-                res.send(allPosts)
+                res.json(posts)
             }
         }
-    })
+    )
 })
